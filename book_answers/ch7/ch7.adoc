@@ -46,4 +46,4 @@ end
 
 We could do better: see _section 3.5.4_ from the book.
 
-
+Obs.: There are some parsing erros to the pdf.
