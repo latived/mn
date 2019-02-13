@@ -1,0 +1,49 @@
+= Exercises from Applied Numerical Methods with MATLAB
+:stem:
+:source-highlighter: rouge
+
+== 7.35
+
+latexmath:[D = 0.01\sigma V^{2} + \frac{0.95}{\sigma}(\frac{W}{V})^{2}]
+
+---
+
+* a) With latexmath:[\sigma = 0.6] and latexmath:[W = 16000], determine the minimum drag (D) and the velocity (V) at which it occurs.
+
+[source,matlab]
+----
+>> D = @(V) 0.01 .* (0.6) .* V.^2 + 0.95./(0.6) .* (16000./V).^2;
+>> [z,fval] = fminbnd(D, 200, 600)
+
+z = 
+
+	 509.8181
+
+fval =
+
+   3.1190e+03
+----
+
+---
+
+* b) In addition, develop a sensitivity analysis to determine how this optimum varies in response to a range of latexmath:[W = 12.000 \quad \text{to} \quad 20.000] with latexmath:[\sigma = 0.6]. 
+
+We have latexmath:[D = 0.01\sigma V^{2} + \frac{0.95}{\sigma}(\frac{W}{V})^{2}] with latexmath:[\sigma = 0.6] and latexmath:[W \in [12000, 20000\]].
+
+[source,matlab]
+----
+>> Vs = zeros(1,8000);
+>> Ds = zeros(1,8000);
+>> for W = 12000:20000
+D = @(V) 0.01 .* (0.6) .* V.^2 + 0.95./(0.6) .* (W./V).^2;
+[z,fval] = fminbnd(D, 200, 600);
+Vs(W-12000+1) = z;
+Ds(W-12000+1) = fval;
+end
+>> histogram(Vs,100) 
+% could make a contour plot of Vs and Ds
+----
+
+We could do better: see _section 3.5.4_ from the book.
+
+Obs.: There are some parsing erros to the pdf.
