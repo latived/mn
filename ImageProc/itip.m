@@ -74,4 +74,16 @@ imageplot(Lf, 'FT', 1,3,3);
 
 %% Exercício 2
 
+k = round(.8*n); k = round(k/2)*2; 
+Mf = fft2(M);
+Mf(n/2-k/2+2:n/2+k/2, n/2-k/2+2:n/2+k/2) = 0;
+Mh = real( ifft2(Mf) );
 
+clf;
+imageplot( crop(M), 'Image', 1,3,1);
+imageplot( crop(Mf), 'Filter', 1,3,2);
+imageplot(clamp( crop(Mh)), 'Low pass filtered', 1,3,3);
+
+%% Interpolating
+
+% ...
